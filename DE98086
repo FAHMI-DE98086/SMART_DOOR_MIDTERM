@@ -1,0 +1,50 @@
+/***************************************************
+
+define library and pins for PIR sensor , LED , servo
+
+                   and light bulb
+
+**************************************************/
+
+#include <Servo.h>  
+Servo myservo;  //myservo as servo variable
+int ledred=6; //ledred connect to pin 6
+int pir=2;    //pir sensor connect to pin 2
+int lampu=4;  ///light bulb connect to pin 4
+
+/****************************************************
+
+       setting up the pins to be output or input 
+
+****************************************************/
+
+
+void setup()
+{
+  pinMode(pir,INPUT);  //pir as input 
+  pinMode(ledred,OUTPUT);  //ledred as output 
+  myservo.attach(9);  //myservo at pin 9 as output
+  Serial.begin(9600);  //print data at serial monitor
+  pinMode (lampu,OUTPUT);  //light bulb as output
+}
+
+void loop()
+{
+  int val = digitalRead(pir); // to read pir sensor
+  Serial.println(val);  //print val value
+
+  if(val==HIGH){   //   (motion)
+    digitalWrite(ledred,HIGH); //ledred will on
+    digitalWrite(lampu,HIGH);   //lampu will on
+    myservo.write(90); // servo arm will rotate 90 degrees
+  }
+  else{  // (no motion)
+    digitalWrite(ledred,LOW); //led will off
+    digitalWrite(lampu,LOW);    //lampu will off
+    myservo.write(0); //servo arm will rotate 0 degrees 
+
+
+  delay(10); //delay for 10 microseconds
+
+  }
+}                    
